@@ -9,6 +9,17 @@ pub enum Formation {
     Pyramid,
 }
 
+impl std::fmt::Display for Formation {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Formation::Diamond => write!(f, "Diamond")?,
+            Formation::Square => write!(f, "Square")?,
+            Formation::Pyramid => write!(f, "Pyramid")?,
+        }
+        Ok(())
+    }
+}
+
 impl Formation {
     pub fn get_random() -> Self {
         let mut rng = rand::thread_rng();

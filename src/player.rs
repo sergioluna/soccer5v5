@@ -23,6 +23,14 @@ impl Player {
     pub fn number(&self) -> u8 {
         self.number
     }
+
+    pub fn position(&self) -> Option<PlayerPosition> {
+        self.position.clone()
+    }
+
+    pub fn set_position(&mut self, position: PlayerPosition) {
+        self.position = Some(position);
+    }
 }
 
 #[cfg(test)]

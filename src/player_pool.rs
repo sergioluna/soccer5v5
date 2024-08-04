@@ -32,6 +32,10 @@ impl PlayerPool {
     pub fn players(&self) -> &Vec<Player> {
         &self.players
     }
+
+    pub fn mut_players(&mut self) -> &mut Vec<Player> {
+        &mut self.players
+    }
 }
 
 #[cfg(test)]
