@@ -14,7 +14,7 @@ fn main() {
         Player::new(String::from("Tyler"), 10),
     ]);
 
-    let game = Game::from(&players);
+    let game = Game::from(players);
 
     println!("{}", game);
 }

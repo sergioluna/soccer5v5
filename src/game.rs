@@ -2,13 +2,13 @@ use crate::player_pool::PlayerPool;
 use crate::team::Team;
 
 #[derive(Debug)]
-pub struct Game<'a> {
-    player_pool: &'a PlayerPool,
+pub struct Game {
+    player_pool: PlayerPool,
     teams: (Team, Team),
 }
 
-impl<'a> From<&'a PlayerPool> for Game<'a> {
-    fn from(player_pool: &'a PlayerPool) -> Self {
+impl From<PlayerPool> for Game {
+    fn from(player_pool: PlayerPool) -> Self {
         if player_pool.players().len() != 10 {
             panic!("Game players length must be 10");
         }
@@ -20,7 +20,7 @@ impl<'a> From<&'a PlayerPool> for Game<'a> {
     }
 }
 
-impl<'a> std::fmt::Display for Game<'a> {
+impl std::fmt::Display for Game {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         writeln!(f, "Team A:")?;
         writeln!(f, "{} Formation", self.teams.0.formation())?;
@@ -58,7 +58,7 @@ impl<'a> std::fmt::Display for Game<'a> {
     }
 }
 
-impl<'a> Game<'a> {
+impl Game {
     pub fn player_pool(&self) -> &PlayerPool {
         &self.player_pool
     }
@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn create_game_from_player_pool() {
         let player_pool = get_valid_player_pool();
-        let game = Game::from(&player_pool);
+        let game = Game::from(player_pool);
         assert_eq!(game.player_pool().players().len(), 10);
         assert_eq!(game.teams().0.player_pool().players().len(), 5);
         assert_eq!(game.teams().1.player_pool().players().len(), 5);
