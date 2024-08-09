@@ -1,7 +1,7 @@
-use soccer5v5::{Game, Player, PlayerPool};
+use soccer5v5::{Game, Player};
 
 fn main() {
-    let players = PlayerPool::from(vec![
+    let game = Game::from(vec![
         Player::new(String::from("Washington"), 1),
         Player::new(String::from("Adams"), 2),
         Player::new(String::from("Jefferson"), 3),
@@ -13,8 +13,6 @@ fn main() {
         Player::new(String::from("Harrison"), 9),
         Player::new(String::from("Tyler"), 10),
     ]);
-
-    let game = Game::from(players);
 
     println!("{}", game);
 }

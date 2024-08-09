@@ -1,3 +1,4 @@
+use crate::player::Player;
 use crate::player_pool::PlayerPool;
 use crate::team::Team;
 
@@ -5,6 +6,12 @@ use crate::team::Team;
 pub struct Game {
     player_pool: PlayerPool,
     teams: (Team, Team),
+}
+
+impl From<Vec<Player>> for Game {
+    fn from(players: Vec<Player>) -> Self {
+        Game::from(PlayerPool::from(players))
+    }
 }
 
 impl From<PlayerPool> for Game {
@@ -72,8 +79,8 @@ mod tests {
     use super::*;
     use crate::player::Player;
 
-    fn get_valid_player_pool() -> PlayerPool {
-        let players = vec![
+    fn get_valid_player_vec() -> Vec<Player> {
+        vec![
             Player::new(String::from("Washington"), 1),
             Player::new(String::from("Adams"), 2),
             Player::new(String::from("Jefferson"), 3),
@@ -84,7 +91,11 @@ mod tests {
             Player::new(String::from("Buren"), 8),
             Player::new(String::from("Harrison"), 9),
             Player::new(String::from("Tyler"), 10),
-        ];
+        ]
+    }
+
+    fn get_valid_player_pool() -> PlayerPool {
+        let players = get_valid_player_vec();
         PlayerPool::from(players)
     }
 
@@ -92,6 +103,15 @@ mod tests {
     fn create_game_from_player_pool() {
         let player_pool = get_valid_player_pool();
         let game = Game::from(player_pool);
+        assert_eq!(game.player_pool().players().len(), 10);
+        assert_eq!(game.teams().0.player_pool().players().len(), 5);
+        assert_eq!(game.teams().1.player_pool().players().len(), 5);
+    }
+
+    #[test]
+    fn create_game_from_player_vec() {
+        let players = get_valid_player_vec();
+        let game = Game::from(players);
         assert_eq!(game.player_pool().players().len(), 10);
         assert_eq!(game.teams().0.player_pool().players().len(), 5);
         assert_eq!(game.teams().1.player_pool().players().len(), 5);
